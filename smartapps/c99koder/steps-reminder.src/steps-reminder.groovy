@@ -50,7 +50,7 @@ def initialize() {
 }
 
 def handler() {
-    if(thesteps.currentSteps < theminimumsteps) {
+    if(theSteps.currentSteps < theMinimumSteps) {
     	sendPush("You've only taken ${theSteps.currentSteps} steps today.  Go for a walk to help you reach your ${theSteps.currentGoal} steps goal!")
     }
 }
