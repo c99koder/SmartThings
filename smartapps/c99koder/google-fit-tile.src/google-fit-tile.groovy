@@ -53,6 +53,7 @@ def mainPage() {
         } else {
             section("Options") {
             	input "useMetricUnits", "bool", title:"Use Metric Units", required: false, defaultValue: true
+            	input "theStepsGoal", "number", title:"Steps Goal", required: false
             }
         }
     }
@@ -228,7 +229,7 @@ def getSteps() {
     
     if(result?.bucket)
     	return result.bucket[0].dataset[0].point[0].value[0].intVal
-	return 0;
+	return 0
 }
 
 def getWeight() {
@@ -271,15 +272,19 @@ def getWeight() {
     }
 
 	if(result?.bucket) {
-    	def fpVals = result.bucket.dataset.point.value.fpVal;
+    	def fpVals = result.bucket.dataset.point.value.fpVal
     	return fpVals[0][0][0].reverse()[0]
     }
 
-	return 0;
+	return 0
 }
 
 def isMetric() {
-	return useMetricUnits;
+	return useMetricUnits
+}
+
+def getStepsGoal() {
+	return theStepsGoal
 }
 
 def setupChildDevice() {
