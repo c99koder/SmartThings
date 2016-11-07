@@ -14,7 +14,7 @@ Steps to set this up... (based on instructions from mnestor's [GCal-Search Smart
  - Setup new credentials - https://console.developers.google.com/apis/credentials
  - Enable OAuth with a redirect URI of: ```https://graph.api.smartthings.com/oauth/callback```
  - Copy the Client ID and Client Secret, you will need these later
-2. Install the [Google Fit Tile](/smartapps/c99koder/google-fit-tile.src/google-fit-tile.groovy SmartApp
+2. Install the [Google Fit Tile](/smartapps/c99koder/google-fit-tile.src/google-fit-tile.groovy) SmartApp
  - https://graph.api.smartthings.com/ide/app/create
  - Enable OAuth for "Google Fit Tile"
  - Put the ClientID and Client Secret you copied from Step 1 into the Settings for "Google Fit Tile"
