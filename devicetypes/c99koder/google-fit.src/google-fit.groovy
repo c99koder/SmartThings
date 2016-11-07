@@ -42,16 +42,15 @@ def parse(String description) {}
 def poll() {
 	def steps = parent.getSteps()
     
-    log.debug("Steps: " + steps)
-    
     if(steps) {
     	sendEvent("name":"steps", "value":steps)
-        sendEvent("name":"goal", "value":0)
+        if(parent.getStepsGoal())
+	        sendEvent("name":"goal", "value":parent.getStepsGoal())
+        else
+    	    sendEvent("name":"goal", "value":0)
     }
 
 	def weight = parent.getWeight()
-    
-    log.debug("Weight: " + weight)
     
     if(steps) {
     	sendEvent("name":"weight", "value":weight)
