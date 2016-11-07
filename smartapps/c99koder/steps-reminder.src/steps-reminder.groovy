@@ -19,9 +19,9 @@ definition(
     author: "Sam Steele",
     description: "Reminder to take a walk when steps count is low",
     category: "Health & Wellness",
-    iconUrl: "https://s3.amazonaws.com/smartapp-icons/HealthAndWellness/Cat-HealthAndWellness.png",
-    iconX2Url: "https://s3.amazonaws.com/smartapp-icons/HealthAndWellness/Cat-HealthAndWellness@2x.png",
-    iconX3Url: "https://s3.amazonaws.com/smartapp-icons/HealthAndWellness/Cat-HealthAndWellness@2x.png")
+    iconUrl: "http://cdn.device-icons.smartthings.com/Health%20&%20Wellness/health11-icn.png",
+    iconX2Url: "http://cdn.device-icons.smartthings.com/Health%20&%20Wellness/health11-icn@2x.png",
+    iconX3Url: "http://cdn.device-icons.smartthings.com/Health%20&%20Wellness/health11-icn@3x.png")
 
 
 preferences {
