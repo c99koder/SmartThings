@@ -52,7 +52,7 @@ def poll() {
 
 	def weight = parent.getWeight()
     
-    if(steps) {
+    if(weight) {
     	sendEvent("name":"weight", "value":weight)
         if(parent.isMetric()) {
     		sendEvent("name":"weight_string", "value":String.format("%.2f kg",weight))
