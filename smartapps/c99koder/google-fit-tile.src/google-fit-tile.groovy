@@ -227,8 +227,27 @@ def getSteps() {
         }
     }
     
-    if(result?.bucket)
-    	return result.bucket[0].dataset[0].point[0].value[0].intVal
+    if(result?.bucket) {
+    	for(int i = 0; i < result.bucket.size(); i++) {
+        	if(result.bucket[i].dataset) {
+                for(int j = 0; j < result.bucket[i].dataset.size(); j++) {
+                    if(result.bucket[i].dataset[j].point) {
+                        for(int k = 0; k < result.bucket[i].dataset[j].point.size(); k++) {
+                            if(result.bucket[i].dataset[j].point[k].value) {
+                                for(int l = 0; l < result.bucket[i].dataset[j].point[k].value.size(); l++) {
+                                    if(result.bucket[i].dataset[j].point[k].value[l].intVal) {
+                                    	return result.bucket[i].dataset[j].point[k].value[l].intVal;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+	log.debug "Unable to parse result: ${result}"
 	return 0
 }
 
@@ -272,10 +291,12 @@ def getWeight() {
     }
 
 	if(result?.bucket) {
-    	def fpVals = result.bucket.dataset.point.value.fpVal
-    	return fpVals[0][0][0].reverse()[0]
+    	def fpVals = result.bucket.dataset?.point?.value?.fpVal
+        if(fpVals)
+	    	return fpVals[0][0][0].reverse()[0]
     }
 
+    log.debug "Unable to parse result: ${result}"
 	return 0
 }
 
