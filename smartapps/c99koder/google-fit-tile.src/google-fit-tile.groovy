@@ -257,7 +257,7 @@ def getWeight() {
     Calendar date = new GregorianCalendar(location.timeZone)
     long endTime = date.getTimeInMillis()
     
-	date.add(Calendar.WEEK_OF_YEAR, -1)
+	date.add(Calendar.WEEK_OF_YEAR, -6)
     long startTime = date.getTimeInMillis()
 
     def body = [
@@ -293,7 +293,7 @@ def getWeight() {
 	if(result?.bucket) {
     	def fpVals = result.bucket.dataset?.point?.value?.fpVal
         if(fpVals)
-	    	return fpVals[0][0][0].reverse()[0]
+	    	return fpVals[0][0][0]?.reverse()[0]
     }
 
     log.debug "Unable to parse result: ${result}"
