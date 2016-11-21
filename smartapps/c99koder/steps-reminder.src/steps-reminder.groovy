@@ -50,6 +50,9 @@ def initialize() {
 }
 
 def handler() {
+	if(theSteps.hasCommand("refresh"))
+    	theSteps.refresh()
+
     if(theSteps.currentSteps < theMinimumSteps) {
     	if(theSteps.currentGoal)
 	    	sendPush("You've only taken ${theSteps.currentSteps} steps today.  Go for a walk to help you reach your ${theSteps.currentGoal} steps goal!")
