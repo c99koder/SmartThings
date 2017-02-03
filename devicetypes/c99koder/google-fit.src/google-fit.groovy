@@ -43,7 +43,6 @@ def poll() {
 	def steps = parent.getSteps()
     
     if(steps) {
-    	log.debug "Google Fit steps: ${steps}"
     	sendEvent("name":"steps", "value":steps)
         if(parent.getStepsGoal())
 	        sendEvent("name":"goal", "value":parent.getStepsGoal())
@@ -56,7 +55,6 @@ def poll() {
 	def weight = parent.getWeight()
     
     if(weight) {
-    	log.debug "Google Fit weight: ${weight}"
     	sendEvent("name":"weight", "value":weight)
         if(parent.isMetric()) {
     		sendEvent("name":"weight_string", "value":String.format("%.2f kg",weight))
