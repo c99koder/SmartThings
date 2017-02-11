@@ -2,7 +2,7 @@
 
 A repository of my open-source SmartThings projects
 
-## [Google Fit Tile](/smartapps/c99koder/google-fit-connect.src/google-fit-connect.groovy)
+## [Google Fit (Connect)](/smartapps/c99koder/google-fit-connect.src/google-fit-connect.groovy)
 
 A SmartApp that will display your Google Fit steps as a tile.  Requires registering the [Google Fit device handler](/devicetypes/c99koder/google-fit.src) and enabling OAuth2.
 
