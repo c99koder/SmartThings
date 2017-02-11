@@ -2,7 +2,7 @@
 
 A repository of my open-source SmartThings projects
 
-## [Google Fit Tile](/smartapps/c99koder/google-fit-tile.src/google-fit-tile.groovy)
+## [Google Fit Tile](/smartapps/c99koder/google-fit-connect.src/google-fit-connect.groovy)
 
 A SmartApp that will display your Google Fit steps as a tile.  Requires registering the [Google Fit device handler](/devicetypes/c99koder/google-fit.src) and enabling OAuth2.
 
@@ -25,7 +25,7 @@ Steps to set this up... (based on instructions from mnestor's [GCal-Search Smart
 Open the ST app on your phone and install the "Google Fit Tile" app.
 This will walk you through connecting to Google and setting a steps goal.
 
-![Screenshot](/smartapps/c99koder/google-fit-tile.src/Screenshot_20161107-153736.png)
+![Screenshot](/smartapps/c99koder/google-fit-connect.src/Screenshot_20161107-153736.png)
 
 ## [Steps Reminder](/smartapps/c99koder/steps-reminder.src/steps-reminder.groovy)
 
