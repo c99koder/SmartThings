@@ -72,25 +72,18 @@ def powerOnHandler() {
 	thephysicalswitch.on()
 }
 
-def myEventGhostShutdown(evt) {
-	return 
-}
-
 def ping() {
 	runIn(60, pingTimeout)
 	def egHost = computerIP + ":" + computerPort
-	log.debug "Pinging $egHost"
 	sendHubCommand(new physicalgraph.device.HubAction("""GET / HTTP/1.1\r\nHOST: $egHost\r\n\r\n""",physicalgraph.device.Protocol.LAN,null,[callback:pingCallback]))
 }
 
 def pingCallback(physicalgraph.device.HubResponse hubResponse) {
-	log.debug "PC is UP"
     unschedule(pingTimeout)
     state.ignoreOn = true
     theswitch.on()
 }
 
 def pingTimeout() {
-	log.debug "PC is DOWN"
 	theswitch.off()
 }
