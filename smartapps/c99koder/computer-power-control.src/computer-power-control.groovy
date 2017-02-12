@@ -80,10 +80,18 @@ def ping() {
 
 def pingCallback(physicalgraph.device.HubResponse hubResponse) {
     unschedule(pingTimeout)
-    state.ignoreOn = true
-    theswitch.on()
+	def v = theswitch.currentSwitch
+    if(theswitch.currentSwitch != "on") {
+	    log.debug("PC is now online, turning on virtual switch")
+        state.ignoreOn = true
+        theswitch.on()
+    }
 }
 
 def pingTimeout() {
-	theswitch.off()
+	def v = theswitch.currentSwitch
+    if(theswitch.currentSwitch != "off") {
+	    log.debug("PC is now offline, turning off virtual switch")
+		theswitch.off()
+    }
 }
