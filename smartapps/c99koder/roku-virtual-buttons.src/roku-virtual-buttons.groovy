@@ -55,7 +55,7 @@ def createButtons() {
     appsNode.children().each{
     	def appId = it.@id.toString()
         def deviceLabel = it.text()
-        def device = addChildDevice("smartthings", "Momentary Button Tile", appId, null, [label: deviceLabel])
+        def device = addChildDevice("smartthings", "Momentary Button Tile", appId, null, [label: "Roku: $deviceLabel"])
         state["$device.id"] = appId
         subscribe(device, "switch", switchHandler)
     	log.debug "Created button tile $device.id for channel $deviceLabel ($appId)"
