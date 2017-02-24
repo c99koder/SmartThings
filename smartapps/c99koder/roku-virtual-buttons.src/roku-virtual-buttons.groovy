@@ -26,7 +26,7 @@ definition(
 
 preferences {
 	section("Title") {
-		input "roku","capability.mediaController", title: "Roku Device",multiple: false, required: true
+		input "roku","capability.mediaController", title: "Roku Device", multiple: false, required: true
 	}
 }
 
@@ -45,20 +45,20 @@ def initialize() {
 }
 
 def createButtons() {
-	getAllChildDevices().each {
-        deleteChildDevice(it.deviceNetworkId)
-    }
-    
     def activityList = roku.currentValue("activityList");
     def appsNode = new XmlSlurper().parseText(activityList);
     
     appsNode.children().each{
     	def appId = it.@id.toString()
         def deviceLabel = it.text()
-        def device = addChildDevice("smartthings", "Momentary Button Tile", appId, null, [label: "Roku: $deviceLabel"])
-        state["$device.id"] = appId
-        subscribe(device, "switch", switchHandler)
-    	log.debug "Created button tile $device.id for channel $deviceLabel ($appId)"
+        if (getChildDevice(appId) == null) {
+	        def device = addChildDevice("smartthings", "Momentary Button Tile", appId, null, [label: "Roku: $deviceLabel"])
+    	    state["$device.id"] = appId
+        	subscribe(device, "switch", switchHandler)
+    		log.debug "Created button tile $device.id for channel $deviceLabel ($appId)"
+        } else {
+    		log.debug "Skipped $appId"
+        }
     }
 }
 
