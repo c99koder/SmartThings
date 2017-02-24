@@ -37,6 +37,24 @@ A SmartApp that will send you a push notification if you haven't reached a speci
 
 A SmartApp that uses a virtual switch to control a PC connected to a z-wave outlet and uses EventGhost to cleanly shut the PC down
 
+## [Roku Virtual Buttons](/smartapps/c99koder/roku-virtual-buttons.src/roku-virtual-buttons.groovy)
+
+This SmartApp creates virtual button devices for the apps installed on your Roku device.  I'm using this with IFTTT + Google Home to switch inputs on my TCL Roku TV, for example "OK Google, switch to the xbox" triggers IFTTT to press the "Roku: Game Console" button.
+
+Requirements:
+ - SmartThings "Momentary Button Tile" devicetype (from Templates)
+ - [Roku manager SmartApp from MadMouse](https://github.com/MadMouse/SmartThings/blob/master/RokuManager/RokuConnect.groovy)
+ - [My modified Roku device type (until MadMouse merges my change)](/devicetypes/madmouse/roku.src/roku.groovy)
+ - [Roku virtual buttons SmartApp](/smartapps/c99koder/roku-virtual-buttons.src/roku-virtual-buttons.groovy)
+
+Instructions:
+ - Install the requirements above and then launch the "Roku (Connect)" SmartApp to discover and pair your Roku device
+ - Launch the Roku Virtual Buttons SmartApp and select your Roku device, then tap the Done button
+
+When the settings are saved, the SmartApp will create button devices for each app on your Roku, they should appear in your My Home list with the prefix "Roku: "
+
+![Screenshot](/smartapps/c99koder/roku-virtual-buttons.src/screenshot.png)
+
 # License
 
 Copyright 2017 Sam Steele
