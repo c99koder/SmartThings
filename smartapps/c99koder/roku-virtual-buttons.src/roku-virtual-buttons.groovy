@@ -54,11 +54,14 @@ def createButtons() {
         if (getChildDevice(appId) == null) {
 	        def device = addChildDevice("smartthings", "Momentary Button Tile", appId, null, [label: "Roku: $deviceLabel"])
     	    state["$device.id"] = appId
-        	subscribe(device, "switch", switchHandler)
     		log.debug "Created button tile $device.id for channel $deviceLabel ($appId)"
         } else {
     		log.debug "Skipped $appId"
         }
+    }
+    
+    getAllChildDevices().each {
+        	subscribe(it, "switch", switchHandler)
     }
 }
 
