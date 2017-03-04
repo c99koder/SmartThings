@@ -41,24 +41,27 @@ def updated() {
 
 def initialize() {
 	subscribe(roku, "activityList", createButtons)
-    createButtons()
+    createButtons(null)
+    roku.getAllActivities()
 }
 
-def createButtons() {
-    def activityList = roku.currentValue("activityList");
-    def appsNode = new XmlSlurper().parseText(activityList);
-    
-    appsNode.children().each{
-    	def appId = it.@id.toString()
-        def deviceLabel = it.text()
-        if (getChildDevice(appId) == null) {
-	        def device = addChildDevice("smartthings", "Momentary Button Tile", appId, null, [label: "Roku: $deviceLabel"])
-    	    state["$device.id"] = appId
-    		log.debug "Created button tile $device.id for channel $deviceLabel ($appId)"
-        } else {
-    		log.debug "Skipped $appId"
+def createButtons(evt) {
+    def activityList = roku.currentValue("activityList")
+    if (activityList != null) {
+        def appsNode = new XmlSlurper().parseText(activityList)
+
+        appsNode.children().each{
+            def appId = it.@id.toString()
+            def deviceLabel = it.text()
+            if (getChildDevice(appId) == null) {
+                def device = addChildDevice("smartthings", "Momentary Button Tile", appId, null, [label: "Roku: $deviceLabel"])
+                state["$device.id"] = appId
+                log.debug "Created button tile $device.id for channel $deviceLabel ($appId)"
+            } else {
+                log.debug "Skipped $appId"
+            }
         }
-    }
+	}
     
     getAllChildDevices().each {
         	subscribe(it, "switch", switchHandler)
