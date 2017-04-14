@@ -50,7 +50,7 @@ def initialize() {
 	subscribe(theswitch, "switch.on", theswitchOnHandler)
     subscribe(theswitch, "switch.off", theswitchOffHandler)
     
-    runEvery5Minutes(ping)
+    runEvery15Minutes(ping)
     ping()
 }
 
@@ -69,11 +69,13 @@ def theswitchOffHandler(evt) {
 }
 
 def powerOnHandler() {
+    unschedule(pingTimeout)
 	thephysicalswitch.on()
 }
 
 def ping() {
-	runIn(60, pingTimeout)
+    unschedule(pingTimeout)
+	runIn(300, pingTimeout)
 	def egHost = computerIP + ":" + computerPort
 	sendHubCommand(new physicalgraph.device.HubAction("""GET / HTTP/1.1\r\nHOST: $egHost\r\n\r\n""",physicalgraph.device.Protocol.LAN,null,[callback:pingCallback]))
 }
