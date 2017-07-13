@@ -1,7 +1,7 @@
 /**
  *  Google Fit (Connect)
  *
- *  Copyright 2016 Sam Steele
+ *  Copyright 2017 Sam Steele
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  *  in compliance with the License. You may obtain a copy of the License at:
@@ -48,7 +48,7 @@ def mainPage() {
             
             section("Google Authentication") {
                 paragraph "Tap below to log in to Google and authorize SmartThings access."
-                href url:redirectUrl, style:"embedded", required:true, title:"", description:"Click to enter credentials"
+                href url:redirectUrl, style:"external", required:true, title:"", description:"Click to enter credentials"
             }
         } else {
             section("Options") {
