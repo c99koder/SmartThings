@@ -36,6 +36,7 @@ metadata {
         command "launchAppId", ["String","String"]
         command "startActivityWithContent", ["String","String"]
         command "pressKey", ["String"]
+        command "getAllActivities"
 	}
 
 	tiles(scale: 2) {
