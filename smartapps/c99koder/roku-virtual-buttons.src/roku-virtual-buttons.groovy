@@ -63,13 +63,36 @@ def createButtons(evt) {
         }
 	}
     
-    getAllChildDevices().each {
+    if (getChildDevice("powerOn") == null) {
+        def device = addChildDevice("smartthings", "Momentary Button Tile", "powerOn", null, [label: "Roku: Power On"])
+        state["$device.id"] = "powerOn"
+        log.debug "Created Power On tile $device.id"
+    } else {
+        log.debug "Skipped Power On tile"
+    }
+
+    if (getChildDevice("powerOff") == null) {
+        def device = addChildDevice("smartthings", "Momentary Button Tile", "powerOff", null, [label: "Roku: Power Off"])
+        state["$device.id"] = "powerOff"
+        log.debug "Created Power Off tile $device.id"
+    } else {
+        log.debug "Skipped Power Off tile"
+    }
+
+	getAllChildDevices().each {
         	subscribe(it, "switch", switchHandler)
     }
 }
 
 def switchHandler(evt) {
     if (evt.value == "on") {
-    	roku.launchAppId(state["$evt.device.id"])
+    	if(state["$evt.device.id"] == "powerOn") {
+            sendHubCommand(new physicalgraph.device.HubAction ("wake on lan ${roku.deviceNetworkId}", physicalgraph.device.Protocol.LAN, null, [:]))
+            roku.pressKey("Power")
+        } else if(state["$evt.device.id"] == "powerOff") {
+            roku.pressKey("PowerOff")
+        } else {
+	    	roku.launchAppId(state["$evt.device.id"])
+        }
     }
 }
