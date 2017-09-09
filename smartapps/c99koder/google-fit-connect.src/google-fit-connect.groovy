@@ -54,6 +54,8 @@ def mainPage() {
             section("Options") {
             	input "useMetricUnits", "bool", title:"Use Metric Units", required: false, defaultValue: true
             	input "theStepsGoal", "number", title:"Steps Goal", required: false
+                input "theCaloriesGoal", "number" , title:"Calories Goal", required: false
+                input "theWeightGoal", "number" , title:"Weight Goal", required: false
             }
         }
     }
@@ -251,6 +253,214 @@ def getSteps() {
 	return 0
 }
 
+def getCalories() {
+	refreshAuthToken()
+    
+    Calendar date = new GregorianCalendar(location.timeZone)
+    long endTime = date.getTimeInMillis()
+    
+	date.set(Calendar.HOUR_OF_DAY, 0)
+	date.set(Calendar.MINUTE, 0)
+	date.set(Calendar.SECOND, 0)
+	date.set(Calendar.MILLISECOND, 0)
+    long startTime = date.getTimeInMillis()
+
+    def body = [
+        aggregateBy: [[dataTypeName: "com.google.calories.expended", dataSourceId: "derived:com.google.calories.expended:com.google.android.gms:merge_calories_expended"]],
+        bucketByTime: [durationMillis: endTime - startTime],
+        startTimeMillis: startTime,
+        endTimeMillis: endTime
+    ]
+   
+    def path = "/fitness/v1/users/me/dataset:aggregate"
+    def params = [
+        uri: "https://www.googleapis.com",
+        path: path,
+        headers: ["Authorization": "Bearer ${atomicState.authToken}"],
+        body: body
+    ]
+
+    def result = null
+    try {
+        httpPostJson(params) { resp ->
+            result = resp.data
+        }
+    } catch (e) {
+        log.debug "error: ${path}"
+        log.debug e
+        if (refreshAuthToken()) {
+            return getCalories()
+        } else {
+            log.error "fatality"
+      }
+    }
+
+	if(result?.bucket) {
+    	def fpVals = result.bucket.dataset?.point?.value?.fpVal
+        if(fpVals)
+	    	return fpVals[0][0][0]?.reverse()[0]
+    }
+
+    log.debug "Unable to parse result: ${result}"
+	return 0
+}
+
+def getActivity() {
+	refreshAuthToken()
+    
+    Calendar date = new GregorianCalendar(location.timeZone)
+    long endTime = date.getTimeInMillis()
+    
+	date.set(Calendar.HOUR_OF_DAY, 0)
+	date.set(Calendar.MINUTE, 0)
+	date.set(Calendar.SECOND, 0)
+	date.set(Calendar.MILLISECOND, 0)
+    long startTime = date.getTimeInMillis()
+
+    def body = [
+        aggregateBy: [[dataTypeName: "com.google.activity.segment", dataSourceId: "derived:com.google.activity.segment:com.google.android.gms:merge_activity_segments"]],
+        bucketByTime: [durationMillis: endTime - startTime],
+        startTimeMillis: startTime,
+        endTimeMillis: endTime
+    ]
+   
+    def path = "/fitness/v1/users/me/dataset:aggregate"
+    def params = [
+        uri: "https://www.googleapis.com",
+        path: path,
+        headers: ["Authorization": "Bearer ${atomicState.authToken}"],
+        body: body
+    ]
+
+    def result = null
+    try {
+        httpPostJson(params) { resp ->
+            result = resp.data
+        }
+    } catch (e) {
+        log.debug "error: ${path}"
+        log.debug e
+        if (refreshAuthToken()) {
+            return getActivity()
+        } else {
+            log.error "fatality"
+      }
+    }
+
+	if(result?.bucket) {
+    	def fpVals = result.bucket.dataset?.point?.value?.fpVal
+        if(fpVals)
+	    	return fpVals[0][0][0]?.reverse()[0]
+    }
+
+    log.debug "Unable to parse result: ${result}"
+	return 0
+}
+
+def getDistance() {
+	refreshAuthToken()
+    
+    Calendar date = new GregorianCalendar(location.timeZone)
+    long endTime = date.getTimeInMillis()
+    
+	date.set(Calendar.HOUR_OF_DAY, 0)
+	date.set(Calendar.MINUTE, 0)
+	date.set(Calendar.SECOND, 0)
+	date.set(Calendar.MILLISECOND, 0)
+    long startTime = date.getTimeInMillis()
+
+    def body = [
+        aggregateBy: [[dataTypeName: "com.google.distance.delta", dataSourceId: "derived:com.google.distance.delta:com.google.android.gms:merge_distance"]],
+        bucketByTime: [durationMillis: endTime - startTime],
+        startTimeMillis: startTime,
+        endTimeMillis: endTime
+    ]
+   
+    def path = "/fitness/v1/users/me/dataset:aggregate"
+    def params = [
+        uri: "https://www.googleapis.com",
+        path: path,
+        headers: ["Authorization": "Bearer ${atomicState.authToken}"],
+        body: body
+    ]
+
+    def result = null
+    try {
+        httpPostJson(params) { resp ->
+            result = resp.data
+        }
+    } catch (e) {
+        log.debug "error: ${path}"
+        log.debug e
+        if (refreshAuthToken()) {
+            return getDistance()
+        } else {
+            log.error "fatality"
+      }
+    }
+
+	if(result?.bucket) {
+    	def fpVals = result.bucket.dataset?.point?.value?.fpVal
+        if(fpVals)
+	    	return fpVals[0][0][0]?.reverse()[0]
+    }
+
+    log.debug "Unable to parse result: ${result}"
+	return 0
+}
+
+def getHeartRate() {
+	refreshAuthToken()
+    
+    Calendar date = new GregorianCalendar(location.timeZone)
+    long endTime = date.getTimeInMillis()
+    
+	date.set(Calendar.HOUR_OF_DAY, 0)
+	date.set(Calendar.MINUTE, 0)
+	date.set(Calendar.SECOND, 0)
+	date.set(Calendar.MILLISECOND, 0)
+    long startTime = date.getTimeInMillis()
+
+    def body = [
+        aggregateBy: [[dataTypeName: "com.google.heart_rate.bpm", dataSourceId: "derived:com.google.heart_rate.bpm:com.google.android.gms:merge_heart_rate_bpm"]],
+        bucketByTime: [durationMillis: endTime - startTime],
+        startTimeMillis: startTime,
+        endTimeMillis: endTime
+    ]
+   
+    def path = "/fitness/v1/users/me/dataset:aggregate"
+    def params = [
+        uri: "https://www.googleapis.com",
+        path: path,
+        headers: ["Authorization": "Bearer ${atomicState.authToken}"],
+        body: body
+    ]
+
+    def result = null
+    try {
+        httpPostJson(params) { resp ->
+            result = resp.data
+        }
+    } catch (e) {
+        log.debug "error: ${path}"
+        log.debug e
+        if (refreshAuthToken()) {
+            return getHeartRate()
+        } else {
+            log.error "fatality"
+      }
+    }
+
+	if(result?.bucket) {
+    	def fpVals = result.bucket.dataset?.point?.value?.fpVal
+        if(fpVals)
+	    	return fpVals[0][0][0]?.reverse()[0]
+    }
+
+    log.debug "Unable to parse result: ${result}"
+	return 0
+}
+
 def getWeight() {
 	refreshAuthToken()
     
@@ -284,7 +494,7 @@ def getWeight() {
         log.debug "error: ${path}"
         log.debug e
         if (refreshAuthToken()) {
-            return getSteps()
+            return getWeight()
         } else {
             log.error "fatality"
         }
@@ -300,12 +510,70 @@ def getWeight() {
 	return 0
 }
 
+def getHeight() {
+	refreshAuthToken()
+    
+    Calendar date = new GregorianCalendar(location.timeZone)
+    long endTime = date.getTimeInMillis()
+    
+	date.add(Calendar.WEEK_OF_YEAR, -6)
+    long startTime = date.getTimeInMillis()
+
+    def body = [
+        aggregateBy: [[dataTypeName: "com.google.height", dataSourceId: "derived:com.google.height:com.google.android.gms:merge_height"]],
+        bucketByTime: [durationMillis: endTime - startTime],
+        startTimeMillis: startTime,
+        endTimeMillis: endTime
+    ]
+   
+    def path = "/fitness/v1/users/me/dataset:aggregate"
+    def params = [
+        uri: "https://www.googleapis.com",
+        path: path,
+        headers: ["Authorization": "Bearer ${atomicState.authToken}"],
+        body: body
+    ]
+
+    def result = null
+    try {
+        httpPostJson(params) { resp ->
+            result = resp.data
+        }
+    } catch (e) {
+        log.debug "error: ${path}"
+        log.debug e
+        if (refreshAuthToken()) {
+            return getHeight()
+        } else {
+            log.error "fatality"
+        }
+    }
+
+	if(result?.bucket) {
+    	def fpVals = result.bucket.dataset?.point?.value?.fpVal
+        if(fpVals)
+	    	return fpVals[0][0][0]?.reverse()[0]
+    }
+
+    log.debug "Unable to parse result: ${result}"
+	return 0
+}
+
+
 def isMetric() {
 	return useMetricUnits
 }
 
 def getStepsGoal() {
 	return theStepsGoal
+}
+
+def getCaloriesGoal() {
+	return theCaloriesGoal
+}
+
+def getWeightGoal() {
+	return theWeightGoal
 }
 
 def setupChildDevice() {
