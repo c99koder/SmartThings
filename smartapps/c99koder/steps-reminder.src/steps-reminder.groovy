@@ -1,7 +1,7 @@
 /**
  *  Steps Reminder
  *
- *  Copyright 2016 Sam Steele
+ *  Copyright 2017 Sam Steele
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  *  in compliance with the License. You may obtain a copy of the License at:
@@ -34,6 +34,15 @@ preferences {
 	section("Scheduled Time") {
         input "theTime", "time", required: true
     }
+    section("Notifications") {
+    	input "sendPush", "bool", required: false, title: "Push Notification"
+        input("recipients", "contact", title: "SMS Notification") {
+            input "phone", "phone", title: "SMS Notification",
+                description: "Phone Number", required: false
+        }
+        input "ttsDevice", "capability.speechSynthesis", required: false, title: "Text To Speech"
+    	input "notificationMessage", "text", required: true, title:"Message Template", defaultValue:"You've only taken %STEPS% steps today.  Go for a walk to help you reach your %GOAL% steps goal!"
+    }
 }
 
 def installed() {
@@ -54,9 +63,20 @@ def handler() {
     	theSteps.refresh()
 
     if(theSteps.currentSteps < theMinimumSteps) {
-    	if(theSteps.currentGoal)
-	    	sendPush("You've only taken ${theSteps.currentSteps} steps today.  Go for a walk to help you reach your ${theSteps.currentGoal} steps goal!")
-        else
-	    	sendPush("You've only taken ${theSteps.currentSteps} steps today.  Go for a walk to help you reach your goal!")
+    	def msg = notificationMessage
+        msg = msg.replace("%STEPS%", theSteps.currentSteps.toString())
+        msg = msg.replace("%GOAL%", theSteps.currentGoal.toString())
+        
+        if(sendPush)
+        	sendPush(msg)
+        
+		if(location.contactBookEnabled && recipients) {
+			sendNotificationToContacts(msg, recipients)
+		} else if(phone) {
+			sendSms(phone, msg)
+		}
+        
+        if(ttsDevice)
+        	ttsDevice.speak(msg)
     }
 }
