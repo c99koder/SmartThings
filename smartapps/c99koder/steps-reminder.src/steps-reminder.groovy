@@ -36,9 +36,8 @@ preferences {
     }
     section("Notifications") {
     	input "sendPush", "bool", required: false, title: "Push Notification", defaultValue: true
-        input("recipients", "contact", title: "SMS Notification") {
-            input "phone", "phone", title: "SMS Notification",
-                description: "Phone Number", required: false
+        input("recipients", "contact", title: "Contacts") {
+            input "phone", "phone", title: "SMS Notification", description: "Phone Number", required: false
         }
         input "ttsDevice", "capability.speechSynthesis", required: false, title: "Text To Speech"
     	input "notificationMessage", "text", required: true, title:"Message Template", defaultValue:"You've only taken %STEPS% steps today.  Go for a walk to help you reach your %GOAL% steps goal!"
