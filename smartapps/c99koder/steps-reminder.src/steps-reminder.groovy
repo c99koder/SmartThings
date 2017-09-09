@@ -35,7 +35,7 @@ preferences {
         input "theTime", "time", required: true
     }
     section("Notifications") {
-    	input "sendPush", "bool", required: false, title: "Push Notification"
+    	input "sendPush", "bool", required: false, title: "Push Notification", defaultValue: true
         input("recipients", "contact", title: "SMS Notification") {
             input "phone", "phone", title: "SMS Notification",
                 description: "Phone Number", required: false
